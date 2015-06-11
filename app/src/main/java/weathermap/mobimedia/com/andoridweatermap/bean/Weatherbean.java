@@ -35,6 +35,11 @@ public class Weatherbean {
         mdate=date;
 
     }
+    public String getImageUrl(){
+
+        return  mimageUrl;
+
+    }
 
 
 }

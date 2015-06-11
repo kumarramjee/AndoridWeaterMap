@@ -1,8 +1,5 @@
 package weathermap.mobimedia.com.andoridweatermap.util;
 
-import android.app.DownloadManager;
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -10,10 +7,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,8 +18,7 @@ import weathermap.mobimedia.com.andoridweatermap.parser.ParserWeather;
  */
 public class Weather {
 
-    String imageUrl;
-    String lastUpdate;
+
 
     public static interface WeatherClientListener {
         public void onWeatherResponse(Weatherbean weather);
