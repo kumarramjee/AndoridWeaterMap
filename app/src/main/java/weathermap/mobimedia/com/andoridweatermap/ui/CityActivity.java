@@ -66,17 +66,6 @@ public class CityActivity extends Activity {
 
         edt = (AutoCompleteTextView) findViewById(R.id.edt);
 
-     /*   edt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int p;
-                int x = cityResultList.get(p);
-
-
-                // We handle the onclick event and select the city chosen by the user
-            }
-        });
-*/
 
         edt.addTextChangedListener(new TextWatcher() {
             @Override
