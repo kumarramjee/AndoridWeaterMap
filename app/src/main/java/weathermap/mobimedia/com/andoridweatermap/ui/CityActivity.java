@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,34 +25,23 @@ import weathermap.mobimedia.com.andoridweatermap.bean.CityResult;
 import weathermap.mobimedia.com.andoridweatermap.parser.ParserCity;
 
 public class CityActivity extends Activity {
+
+    String cityname;
     int x;
     AutoCompleteTextView edt;
     Context ctx;
     ArrayList<CityResult> cityResultList;
-
+    CityAdapter adpt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city);
 
         cityResultList = new ArrayList<CityResult>();
+         //cityname=edt.getText().toString().trim();
 
 
-        new Thread(new Runnable() {
-            public void run() {
-                ParserCity parscity = new ParserCity();
 
-                try {
-                    cityResultList = parscity.getCityList();
-
-                    Log.i("cityActivity", "==" + cityResultList);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (XmlPullParserException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
 
 
         Button submit = (Button) findViewById(R.id.submit);
@@ -65,13 +56,16 @@ public class CityActivity extends Activity {
                 startActivity(intent_detail);
 
 
+
             }
         });
 
 
+
+
+
         edt = (AutoCompleteTextView) findViewById(R.id.edt);
-        CityAdapter adpt = new CityAdapter(getApplicationContext(), cityResultList);
-        edt.setAdapter(adpt);
+
      /*   edt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +77,47 @@ public class CityActivity extends Activity {
             }
         });
 */
+
+        edt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+
+           cityname=edt.getText().toString().trim();
+                new Thread(new Runnable() {
+                    public void run() {
+                        ParserCity parscity = new ParserCity();
+                        parscity.setText(cityname);
+
+                        try {
+                            cityResultList = parscity.getCityList();
+
+                            Log.i("cityActivity", "==" + cityResultList);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (XmlPullParserException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+                adpt = new CityAdapter(getApplicationContext(), cityResultList);
+                edt.setAdapter(adpt);
+                adpt.notifyDataSetChanged();
+
+            }
+        });
         edt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

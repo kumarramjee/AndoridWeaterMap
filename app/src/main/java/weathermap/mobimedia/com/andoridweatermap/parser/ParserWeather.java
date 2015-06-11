@@ -72,6 +72,7 @@ public class ParserWeather {
                         if (currentTag == null) {
                             String imageUrl = parser.getAttributeValue(null, "src");
                             mweatherbean.setimageUrl(imageUrl);
+                            Log.i("Parser Weather","IMage url =="+ mweatherbean.getImageUrl());
                         }
                     }
                     else if (tagName.equals("lastBuildDate")) {
